@@ -79,3 +79,40 @@ These registers, along with rax and rbx, form the set of primary general-purpose
 
 The rip register is the instruction pointer register. 
 It holds the memory address of the next instruction to be executed.
+
+# Example of flow:
+
+```bash 
+gcc -g helloworld.c
+```
+
+```gdb
+(gdb) break main
+(gdb) run
+(gdb) info registers
+rip            0x555555555155      0x555555555155 <main+12>
+```
+
+We see that the instruction pointer is pointing to 0x555555555155;
+Analyzing the code we can found this exact memory location:
+
+```gdb
+(gdb) disassemble
+=> 0x0000555555555155 <+12>:    mov    DWORD PTR [rbp-0x4],0x0
+```
+
+This instruction will set the value in [rbp-0x4] to 0.
+Inspecting this memory location we found some garbage values.
+
+```gdb
+(gdb) x/u $rbp-0x4
+0x7fffffffe08c: 21845
+```
+
+But if we step to the next instruction we should get a 0.
+
+```gdb
+(gdb) stepi
+(gdb) x/u $rbp-0x4
+0x7fffffffe08c: 0
+```
