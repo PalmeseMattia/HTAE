@@ -35,7 +35,7 @@ gdb -q ./a.out
 ```
 
 Add a breakpoint at the main function and run the program. 
-After, we control the registers before the execution of the program: 
+Then, we control the registers before the execution of the program: 
 ```gdb
 (gdb) break main
 (gdb) run
@@ -76,3 +76,6 @@ The first four registers are generics register. They are called:
 - rdx: register 
 
 These registers, along with rax and rbx, form the set of primary general-purpose registers available for use in x86-64 assembly language programming.
+
+The rip register is the instruction pointer register. 
+It holds the memory address of the next instruction to be executed.
